@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: UNLICENSED
-pragma solidity >=0.8.4;
-import "forge-std/console.sol";
+pragma solidity >=0.8.4
 
 interface IStableSwap {
   function exchange(int128 i , int128 j , uint256 dx , uint256 min_dy ) external;
@@ -29,7 +28,7 @@ contract MultichainCurveStableSwap{
     zetaChainId = _zetaChainId;
     stableSwap = _stableSwap;
     zetaSystemContract=_zetaSystemContract;
-    crvZRC20s = _ZRC20s;
+    crvZRC20s = _ZRC20s; 
   }
 
 
@@ -80,8 +79,6 @@ contract MultichainCurveStableSwap{
       uint256 amountOut = IERC20(tokenOut).balanceOf(address(this));
       require(amountOut > 0, "amountOut is zero");
       if (destChainId != zetaChainId) {
-        console.logUint(IERC20(tokenOut).balanceOf(address(this)));
-        console.logString("here!");
         IZRC20(tokenOut).withdraw(abi.encodePacked(receiver), amountOut);
       } else {
         IERC20(tokenOut).transfer(receiver, amountOut);
